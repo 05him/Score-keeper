@@ -17,12 +17,65 @@ output.style.color = "red";
 function scoreIncrease(name) {
   name.innerText = Number(name.innerText) + 1;
 }
+
 function results(winner, looser) {
   winner.style.color = "green";
   looser.style.color = "red";
   output.textContent = "Winner is " + winner.getAttribute("data");
 }
-start.addEventListener("click", () => {
+
+function restartHandler() {
+  playerOneBtn.style.display = "none";
+  playerTwoBtn.style.display = "none";
+  playerOneScore.textContent = "0";
+  playerTwoScore.textContent = "0";
+  output.textContent = "";
+  reset.style.display = "none";
+  restart.style.display = "none";
+  playerOneBtn.disabled = "";
+  playerTwoBtn.disabled = "";
+  playerOneScore.style.color = "black";
+  playerTwoScore.style.color = "black";
+  rounds.disabled = "";
+  start.style.display = "inline";
+  rounds.value = "";
+}
+
+function resetHandler() {
+  playerOneScore.textContent = "0";
+  playerTwoScore.textContent = "0";
+  output.textContent = "";
+  playerOneScore.style.color = "black";
+  playerTwoScore.style.color = "black";
+  playerOneBtn.disabled = "";
+  playerTwoBtn.disabled = "";
+}
+
+function firstPlayerHandler() {
+  scoreIncrease(playerOneScore);
+  if (playerOneScore.innerText === rounds.value) {
+    playerOneBtn.disabled = "true";
+    playerTwoBtn.disabled = "true";
+    results(playerOneScore, playerTwoScore);
+  }
+}
+
+function secondPlayerHandler() {
+  scoreIncrease(playerTwoScore);
+  if (playerTwoScore.innerText === rounds.value) {
+    playerOneBtn.disabled = "true";
+    playerTwoBtn.disabled = "true";
+    results(playerTwoScore, playerOneScore);
+  }
+}
+
+function startHandler() {
+  //remove all old event listeners when 2nd time start is clicked to play again
+  restart.removeEventListener("click", restartHandler);
+  reset.removeEventListener("click", resetHandler);
+  playerOneBtn.removeEventListener("click", firstPlayerHandler);
+  playerTwoBtn.removeEventListener("click", secondPlayerHandler);
+
   if (rounds.value === "") {
     output.innerText = "Pls select no of rounds first";
   } else if (rounds.value != "") {
@@ -33,44 +86,12 @@ start.addEventListener("click", () => {
     reset.style.display = "inline";
     restart.style.display = "inline";
     rounds.disabled = "true";
-    restart.addEventListener("click", () => {
-      playerOneBtn.style.display = "none";
-      playerTwoBtn.style.display = "none";
-      output.textContent = "";
-      reset.style.display = "none";
-      restart.style.display = "none";
-      playerOneBtn.disabled = "";
-      playerTwoBtn.disabled = "";
-      playerOneScore.style.color = "black";
-      playerTwoScore.style.color = "black";
-      rounds.disabled = "";
-      start.style.display = "inline";
-      rounds.value = "";
-    });
-    reset.addEventListener("click", () => {
-      playerOneScore.innerText = "0";
-      playerTwoScore.innerText = "0";
-      playerOneScore.style.color = "black";
-      playerTwoScore.style.color = "black";
-      playerOneBtn.disabled = "";
-      playerTwoBtn.disabled = "";
-    });
+    restart.addEventListener("click", restartHandler);
+    reset.addEventListener("click", resetHandler);
 
-    playerOneBtn.addEventListener("click", () => {
-      scoreIncrease(playerOneScore);
-      if (playerOneScore.innerText === rounds.value) {
-        playerOneBtn.disabled = "true";
-        playerTwoBtn.disabled = "true";
-        results(playerOneScore, playerTwoScore);
-      }
-    });
-    playerTwoBtn.addEventListener("click", () => {
-      scoreIncrease(playerTwoScore);
-      if (playerTwoScore.innerText === rounds.value) {
-        playerOneBtn.disabled = "true";
-        playerTwoBtn.disabled = "true";
-        results(playerTwoScore, playerOneScore);
-      }
-    });
+    playerOneBtn.addEventListener("click", firstPlayerHandler);
+    playerTwoBtn.addEventListener("click", secondPlayerHandler);
   }
-});
+}
+
+start.addEventListener("click", startHandler);
