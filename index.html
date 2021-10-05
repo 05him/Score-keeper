@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <h1>Score-keeper</h1>
+    <div class="main-box">
+      <p>
+        Player-1 :<span class="player-1-score">0</span> to Player-2:
+        <span class="player-2-score">0</span>
+      </p>
+      <label>
+        Select no of rounds
+        <select id="rounds">
+          <option value="">--No of rounds--</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </label>
+      <br />
+      <button class="start">Start</button>
+      <div>
+        <button class="player-1-btn extra-width">+1 Player 1</button>
+        <button class="player-2-btn extra-width">+1 Player 2</button>
+      </div>
+      <button class="reset">Reset</button>
+      <button class="restart">Restart</button>
+      <p class="output"></p>
+    </div>
+  </body>
+  <script src="app.js"></script>
+</html>
