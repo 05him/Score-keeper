@@ -95,3 +95,4 @@ function startHandler() {
 }
 
 start.addEventListener("click", startHandler);
+console.log("hello world");
